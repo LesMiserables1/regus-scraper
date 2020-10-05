@@ -1,0 +1,23 @@
+{
+  "name": "regus-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LesMiserables1/regus-scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LesMiserables1/regus-scraper/issues"
+  },
+  "homepage": "https://github.com/LesMiserables1/regus-scraper#readme",
+  "dependencies": {
+    "puppeteer": "^5.3.1",
+    "util": "^0.12.3"
+  }
+}
