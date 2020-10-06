@@ -1,6 +1,7 @@
 const puppeter = require('puppeteer')
 const fs = require('fs')
 const util = require('util')
+const {formatData} = require('./formatData')
 
 let scrape_url = async () => {
     let url = 'https://www.regus.com/en-us/canada/listings?page='
@@ -33,14 +34,12 @@ let scrape_content = async () => {
 
             const browser = await puppeter.launch({ headless: true })
             const page = await browser.newPage()
-            await page.setViewport({ width: 1366, height: 768 });
             await page.goto(urls[i][j].url, { 'waitUntil': 'networkidle0' })
 
             let data = page.evaluate(() => {
                 let name = document.querySelector('.css-17q564n').textContent
-                let address = document.querySelector('.css-k2w0re').textContent
+                let address = document.querySelector('.css-1kp11b').textContent
                 let mapsLink = document.querySelector('.css-1y39h3w').href
-                // let feature = document.querySelectorAll('.css-1dxx3ns')
                 let getPrice = document.querySelectorAll('.css-hd72a')
                 let availableForRent = document.querySelectorAll('.css-13a70vr')
                 let workspaces = []
@@ -121,9 +120,10 @@ let scrape_content = async () => {
                     highlitedImages.push(getHighlitedImages[i].src)
                 }
 
-                return [name, address, mapsLink, workspaces, features, highlitedFeatures, desc, highlitedImages,img]
+                return [name, address, mapsLink, workspaces, features, highlitedFeatures, desc,img,highlitedImages]
             })
-            console.log(JSON.stringify(await data, null, 4))
+            let formattedData = formatData(await data,urls[i][j])
+            console.log(JSON.stringify(formattedData, null, 4))
         }
     }
 }

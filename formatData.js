@@ -75,4 +75,42 @@ const can_states = {
     "SK": "Saskatchewan",
     "YT": "Yukon"
   }
+//   return [name, address, mapsLink, workspaces, features, highlitedFeatures, desc, highlitedImages,img]
 
+let formatData = (data,url)=>{
+    let splitAddress = data[1].split(', ')
+    let shortState
+    let state
+    let country
+    if(splitAddress[2] == "CAN"){
+        shortState = splitAddress[1][0] + splitAddress[1][1]
+        state = can_states[shortState]
+        console.log(state)
+        country = 'Canada'
+    }else{
+        shortState = splitAddress[1][0] + splitAddress[1][1]
+        state = us_states[shortState]
+        country = 'United States'
+    }
+    let formattedData = {
+        "name" : data[0],
+        "url" : url,
+        "address":{
+            "fullAddress" : data[1],
+            "country" : country,
+            "state" : state,
+            "city" : splitAddress[0],
+            "mapsLink" : data[2]
+        },
+        "workspaces" : data[3],
+        "features" : data[4],
+        "featuresHighlited" : data[5],
+        "description" : data[6],
+        "images" : data[7],
+        "highlitedImages" : data[8]
+    }
+    return formattedData
+}
+module.exports = {
+    formatData
+}
