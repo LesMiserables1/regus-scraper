@@ -72,7 +72,12 @@ let scrape_content = async () => {
                     if (i == 2) {
                         space = undefined
                     } else {
-                        space = availableForRent[i].textContent
+                        try {
+                            
+                            space = availableForRent[i].textContent
+                        } catch (error) {
+                            space = 0
+                        }
                     }
                     workspace = {
                         "office_type": typeWorkspace[i],
@@ -89,6 +94,7 @@ let scrape_content = async () => {
                 let getFeatures = document.querySelectorAll('.css-1cc7wd6')
                 let features = []
                 for (let i = 0; i < getFeatures.length; ++i) {
+
                     features.push(getFeatures[i].textContent)
                 }
 
@@ -122,10 +128,14 @@ let scrape_content = async () => {
 
                 return [name, address, mapsLink, workspaces, features, highlitedFeatures, desc,img,highlitedImages]
             })
+                
             let formattedData = formatData(await data,urls[i][j].url)
-            writeData(formattedData)
-            // console.log(JSON.stringify(formattedData, null, 4))
+            
+            writeData(await formattedData)
+            console.log(JSON.stringify(formattedData, null, 4))
+            await browser.close()
         }
+
     }
 }
 
@@ -140,7 +150,7 @@ scrape_content()
 // (async () => {
 //     const browser = await puppeter.launch()
 //     let page = await browser.newPage()
-//     await page.goto('https://www.regus.com/en-us/canada/toronto/180-john-street-4286', { waitUntil: "networkidle0" })
+//     await page.goto('https://www.regus.com/en-us/canada/ottawa/ottawa-zibi-ottawa-5480', { waitUntil: "networkidle0" })
 //     let data = page.evaluate(() => {
 //         let image = document.querySelectorAll('.css-1bwf1no')
 //         let img = []
@@ -153,4 +163,4 @@ scrape_content()
 //         return img
 //     })
 //     console.log(await data)
-// })
+// })()
