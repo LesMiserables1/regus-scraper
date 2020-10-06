@@ -1,3 +1,4 @@
+const fs = require('fs')
 const us_states = {
     "AL": "Alabama",
     "AK": "Alaska",
@@ -111,6 +112,14 @@ let formatData = (data,url)=>{
     }
     return formattedData
 }
+let writeData = (result)=>{
+    fs.readFile('result.json',"utf8",(err,data)=>{
+        let dataParse = JSON.parse(data)
+        dataParse.push(result)
+        fs.writeFileSync('result.json',JSON.stringify(dataParse))
+    })
+}
 module.exports = {
-    formatData
+    formatData,
+    writeData
 }

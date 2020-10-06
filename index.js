@@ -1,7 +1,7 @@
 const puppeter = require('puppeteer')
 const fs = require('fs')
 const util = require('util')
-const {formatData} = require('./formatData')
+const {formatData,writeData} = require('./formatData')
 
 let scrape_url = async () => {
     let url = 'https://www.regus.com/en-us/canada/listings?page='
@@ -122,8 +122,9 @@ let scrape_content = async () => {
 
                 return [name, address, mapsLink, workspaces, features, highlitedFeatures, desc,img,highlitedImages]
             })
-            let formattedData = formatData(await data,urls[i][j])
-            console.log(JSON.stringify(formattedData, null, 4))
+            let formattedData = formatData(await data,urls[i][j].url)
+            writeData(formattedData)
+            // console.log(JSON.stringify(formattedData, null, 4))
         }
     }
 }
