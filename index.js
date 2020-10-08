@@ -4,9 +4,9 @@ const util = require('util')
 const {formatData,writeData} = require('./formatData')
 
 let scrape_url = async () => {
-    let url = 'https://www.regus.com/en-us/canada/listings?page='
+    let url = 'https://www.regus.com/en-us/united-states/listings?page='
     let page_url = []
-    for (let i = 1; i <= 11; ++i) {
+    for (let i = 1; i <= 86; ++i) {
 
         const browser = await puppeter.launch()
         const page = await browser.newPage()
@@ -22,6 +22,7 @@ let scrape_url = async () => {
         })
         page_url.push(dataUrl)
         await browser.close()
+        console.log(page_url)
     }
     console.log(page_url)
     fs.writeFileSync('urls.json', JSON.stringify(page_url))
@@ -142,7 +143,7 @@ let scrape_content = async () => {
 // scrape_url()
 
 let get_url = async () => {
-    let data = await fs.promises.readFile('urls.json')
+    let data = await fs.promises.readFile('urls_us.json')
     return JSON.parse(data)
 }
 scrape_content()

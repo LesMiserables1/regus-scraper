@@ -112,12 +112,12 @@ let formatData = (data,url)=>{
     }
     return formattedData
 }
-let writeData = (result)=>{
-    fs.readFile('result.json',"utf8",(err,data)=>{
-        let dataParse = JSON.parse(data)
-        dataParse.push(result)
-        fs.writeFileSync('result.json',JSON.stringify(dataParse))
-    })
+let writeData = async(result)=>{
+    
+    let file = await fs.promises.readFile('result_us.json',"utf8")
+    let dataParse = JSON.parse(file)
+    dataParse.push(result)
+    fs.writeFileSync('result_us.json',JSON.stringify(dataParse))
 }
 module.exports = {
     formatData,
